@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>数字当てゲーム</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <main class="game-card">
+    <p class="eyebrow">NUMBER GUESSING GAME</p>
+    <h1>数字当てゲーム</h1>
+    <p class="description">1〜{{ max_value }}の数字を当てよう！</p>
+
+    <section class="settings">
+      <h2>難易度</h2>
+      <form action="{{ url_for('settings') }}" method="post" class="settings-form">
+        <select name="difficulty" aria-label="難易度">
+          <option value="10" {% if max_value == 10 %}selected{% endif %}>かんたん（1〜10）</option>
+          <option value="50" {% if max_value == 50 %}selected{% endif %}>ふつう（1〜50）</option>
+          <option value="100" {% if max_value == 100 %}selected{% endif %}>むずかしい（1〜100）</option>
+        </select>
+        <button type="submit" class="secondary-button">変更</button>
+      </form>
+    </section>
+
+    <div class="message {{ message_type }}" role="status">{{ message }}</div>
+
+    <form action="{{ url_for('guess') }}" method="post" class="guess-form">
+      <label for="guess">数字を入力してください</label>
+      <input id="guess" name="guess" type="number" min="1" max="{{ max_value }}" placeholder="例：25" required {% if finished %}disabled{% endif %}>
+      <button type="submit" {% if finished %}disabled{% endif %}>判定する</button>
+    </form>
+
+    <p class="attempts">挑戦回数：<strong>{{ attempts }}</strong>回</p>
+
+    {% if finished %}
+      <div class="success-note">ゲームクリア！もう一度遊んでみよう。</div>
+    {% endif %}
+    <form action="{{ url_for('reset') }}" method="post">
+      <button type="submit" class="restart-button">もう一度遊ぶ</button>
+    </form>
+  </main>
+</body>
+</html>
