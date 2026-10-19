@@ -1,3 +1,4 @@
+using Xunit;
 using ConsoleGuiApp;
 
 namespace ConsoleGuiApp.Tests;
