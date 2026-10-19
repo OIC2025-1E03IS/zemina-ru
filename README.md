@@ -1,33 +1,62 @@
-# 数字当てゲーム（ConsoleGuiApp）
+# 数字当てゲーム
 
-.NET 8 で動作するコンソールアプリです。矢印キーでメニューを選択し、数字当てゲームを遊べます。
+このリポジトリには、元のC#コンソール版と、Python + Flaskで動くWeb版の数字当てゲームがあります。
 
-## 起動方法
+## Web版の起動方法（初心者向け）
 
-.NET 8 SDK をインストールし、リポジトリのルートで実行します。
+### 1. Pythonを用意する
+
+Python 3.10以降をインストールしてください。
+
+### 2. リポジトリのフォルダーを開く
+
+ターミナル（WindowsならPowerShellまたはVisual Studio Codeのターミナル）で、リポジトリのルートフォルダーに移動します。
+
+### 3. 必要なライブラリをインストールする
+
+```bash
+python -m pip install -r requirements.txt
+```
+
+Windowsで `python` が使えない場合は、`py -m pip install -r requirements.txt` を試してください。
+
+### 4. Webサーバーを起動する
+
+```bash
+python app.py
+```
+
+Windowsで `python` が使えない場合は、`py app.py` を試してください。
+
+ターミナルに表示されたローカルアドレス（通常は `http://127.0.0.1:5000`）をChromeやEdgeで開くとゲームを遊べます。終了するときはターミナルで `Ctrl + C` を押します。
+
+## Web版の遊び方
+
+- 難易度を選び「変更」を押します（1〜10、1〜50、1〜100）。
+- 数字を入力して「判定する」を押します。
+- 正解より小さいと「もっと大きい数字」、大きいと「もっと小さい数字」と表示されます。
+- 正解すると挑戦回数が表示されます。
+- 「もう一度遊ぶ」で同じ難易度の新しいゲームを始められます。
+
+## テスト
+
+```bash
+python -m pip install -r requirements.txt
+python -m pytest
+```
+
+テストでは、画面表示、不正な入力、範囲外の入力、正解時の回数、難易度変更、ゲームのリセットを確認します。
+
+## 元のC#コンソール版
+
+.NET 8 SDKがある場合、次のコマンドで起動できます。
 
 ```bash
 dotnet run --project ConsoleGuiApp/ConsoleGuiApp.csproj
 ```
 
-## 操作方法
-
-- 上下矢印キー：メニュー選択
-- Enter：決定
-- 「ゲームをはじめる」：1～設定された上限の数字を当てます
-- 「せってい」：難易度を1～10、1～50、1～100から選びます
-- 「おわる」：アプリを終了します
-
-整数以外や範囲外の数字を入力した場合は再入力を求めます。
-
-## テスト
+C#版のテストは次のコマンドで実行できます。
 
 ```bash
 dotnet test tests/ConsoleGuiApp.Tests/ConsoleGuiApp.Tests.csproj
 ```
-
-ゲームロジックのテストでは、乱数の範囲、無効な上限、入力の境界値、大小・正解判定を確認します。
-
-## CI
-
-GitHub Actions は push と Pull Request で .NET 8 のビルドとテストを実行します。
